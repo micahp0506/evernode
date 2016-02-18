@@ -28,9 +28,26 @@ module.exports.show = (req, res) => {
     });
 };
 
+module.exports.edit = (req, res) => {
+    Note.findById(req.params.id, (err, note) => {
+        if (err) throw (err);
+        res.render('new-note', {note: note});
+    });
+};
+
+module.exports.update = (req, res) => {
+    Note.findByIdAndUpdate(req.params.id, req.body, (err, note) => {
+        if (err) throw (err);
+
+        res.redirect(`/notes/${note._id}`);
+    });
+};
+
 module.exports.destroy = (req, res) => {
     Note.findByIdAndRemove(req.params.id, (err) => {
         if (err) throw (err);
         res.redirect('/notes');
     });
 };
+
+
