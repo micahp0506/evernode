@@ -17,7 +17,7 @@ const Note = mongoose.model('Notes', mongoose.Schema({
 app.set('view engine', 'jade')
 // Middleware for using bodyParser
 app.use(bodyParser.urlencoded({
-    exended:false
+    exended: false
 }));
 
 app.get('/', (req, res) => {
@@ -28,11 +28,19 @@ app.get('/notes/new', (req, res) => {
     res.render('new-note');
 });
 
+// url's with route params have to be below the exception, in this instance, if this were before the get before, the url would thin that new in the above path is an id
+app.get('/notes/:id', (req, res) => {
+    Note.findById(req.params.id, (err, note) => {
+        if (err) throw (err);
+        res.render('show-note', {note: note});
+    })
+});
+
 app.post('/notes', (req,res) => {
     Note.create(req.body, (err, note) => {
         if (err) throw (err);
-        console.log("note", note);
-        res.redirect('/');
+
+        res.redirect(`/notes/${note._id}`);
     });
 });
 
