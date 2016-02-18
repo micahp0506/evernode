@@ -22,6 +22,9 @@ module.exports.show = (req, res) => {
     });
 };
 
-module.exports.destroy = () => {
-
-}
+module.exports.destroy = (req, res) => {
+    Note.findByIdAndRemove(req.params.id, (err) => {
+        if (err) throw (err);
+        res.send('Your note has been deleted.')
+    });
+};

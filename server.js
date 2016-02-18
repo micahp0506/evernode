@@ -3,6 +3,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
+const methodOverride = require('method-override');
 
 const note = require('./routes/note');
 
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
   res.send('Server Running');
 });
 
+app.use(methodOverride('_method'));
 app.use(note);
 
 mongoose.connect('mongodb://localhost:27017/evernode', (err) => {
