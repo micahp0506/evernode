@@ -1,0 +1,15 @@
+extends ./template
+
+block content
+    h1 New Category
+
+    form(method='POST', action='/category')
+        .input-group
+            label(for='name') Name
+            input#name.form-group(type='text', name='name' )
+        .input-group
+            label(for='Description') Description
+            input#desc.form-group(type='text', name='description')
+        .input-group
+            button.btn.btn-default(type='submit', value='Save') Save
+

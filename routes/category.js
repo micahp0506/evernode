@@ -1,0 +1,33 @@
+'use strict';
+
+
+const express = require('express');
+const router = express.Router();
+
+const Category = require('../models/category');
+const Note = require('../models/note');
+const ctrl = require('../controllers/category');
+
+
+
+router.param('id', (req, res, next, id) => {
+    Category.findById(id, (err, category) => {
+        if (err) throw err;
+
+        req.category = category;
+
+        Note.find({category: id}, (err, notes) => {
+            if (err) throw err
+            req.category.notes = notes
+            next();
+        });
+    });
+});
+
+router
+  .get('/category', ctrl.index)
+  .get('/category/new', ctrl.newCategory)
+  .get('/categories/:id', ctrl.show)
+  .post('/category', ctrl.create);
+
+module.exports = router;
