@@ -19,7 +19,7 @@ module.exports = {
   create (req, res) {
     Category.create(req.body, (err) => {
         if (err) throw err
-        res.redirect('/categories');
+        res.redirect('/notes');
     });
   },
   show(req, res) {
